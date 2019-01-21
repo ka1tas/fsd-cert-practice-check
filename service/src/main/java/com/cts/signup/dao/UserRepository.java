@@ -1,4 +1,4 @@
-package com.cts.signup.Dao;
+/*package com.cts.signup.dao;
 
 
 
@@ -14,3 +14,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 
 }
+*/

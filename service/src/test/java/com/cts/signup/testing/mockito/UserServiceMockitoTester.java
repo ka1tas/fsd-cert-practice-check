@@ -11,14 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cts.signup.Dao.UserRepository;
 import com.cts.signup.bean.User;
+import com.cts.signup.dao.UserDao;
 import com.cts.signup.service.UserService;
 
 public class UserServiceMockitoTester {
 
 	@Mock
-	private UserRepository repository;
+	private UserDao dao;
 
 	@InjectMocks
 	private UserService service;
@@ -33,14 +33,15 @@ public class UserServiceMockitoTester {
 	public void testUserController() {
 
 		User user1 = new User(1, "Saikat", "saikat@gmail.com", "12345");
+		User user2 = null;
 
-		when(repository.save(user1)).thenReturn(user1);
+		when(dao.save(user1)).thenReturn(true);
 
 		boolean result = service.save(user1);
 
 		assertEquals(true, result);
 
-		verify(repository, times(1)).save(user1);
+		verify(dao, times(1)).save(user1);
 	}
 
 }
