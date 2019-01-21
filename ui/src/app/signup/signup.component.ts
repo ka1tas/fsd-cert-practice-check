@@ -10,6 +10,8 @@ export class SignupComponent implements OnInit {
 
   users: any;
   json: any;
+  success=false;
+  error=false;
 
   signup = new FormGroup({
     name: new FormControl(''),
@@ -38,8 +40,17 @@ export class SignupComponent implements OnInit {
       console.log(data);
       this.ngOnInit();
       this.signup.reset();
-      alert("New User Saved!");
-    });
+      this.success=true;
+      this.error= false;
+    },
+    error=>{
+
+      this.error=true;
+      this.success=false;
+
+    }
+    
+    );
 
   }
   
