@@ -16,7 +16,7 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Transactional
-	public boolean saveUser(User user) {
+	public boolean save(User user) {
 		boolean status = false;
 		userRepository.save(user);
 		status = true;

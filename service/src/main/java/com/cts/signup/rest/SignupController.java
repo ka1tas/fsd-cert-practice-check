@@ -24,14 +24,14 @@ public class SignupController {
 	}
 
 	@PostMapping("/adduser")
-	public Boolean saveUsers(@RequestBody User user) {
+	public Boolean saveUser(@RequestBody User user) {
 		boolean status = false;
-		status = userService.saveUser(user);
+		status = userService.save(user);
 
 		return status;
 	}
 
-	@PostMapping("/deleteuser")
+	/*@PostMapping("/deleteuser")
 	public Boolean deleteUsers(@RequestBody String id) {
 		userService.deleteUser(id);
 		return true;
@@ -41,6 +41,6 @@ public class SignupController {
 	public List<User> showUsers() {
 		return userService.showUser();
 
-	}
+	}*/
 
 }
