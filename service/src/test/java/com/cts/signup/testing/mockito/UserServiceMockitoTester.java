@@ -1,10 +1,6 @@
 package com.cts.signup.testing.mockito;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,17 +11,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.cts.signup.Dao.UserRepository;
 import com.cts.signup.bean.User;
-import com.cts.signup.rest.SignupController;
 import com.cts.signup.service.UserService;
 
-public class SignUpMockitoTester {
+public class UserServiceMockitoTester {
 
 	@Mock
-	private UserService service;
+	private UserRepository repository;
 
 	@InjectMocks
-	private SignupController controller;
+	private UserService service;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,13 +34,13 @@ public class SignUpMockitoTester {
 
 		User user1 = new User(1, "Saikat", "saikat@gmail.com", "12345");
 
-		when(service.save(user1)).thenReturn(true);
+		when(repository.save(user1)).thenReturn(user1);
 
-		boolean result = controller.saveUser(user1);
+		boolean result = service.save(user1);
 
 		assertEquals(true, result);
 
-		verify(service, times(1)).save(user1);
+		verify(repository, times(1)).save(user1);
 	}
 
 }
