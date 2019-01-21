@@ -1,5 +1,5 @@
 # Introduction
-This is a boiler plate project is for FSD Certification Practice Check. Fork this project to the group CHN18IJ002 and create the below specified issues in the forked project.
+This is a boiler plate project for FSD Certification Practice Check. Fork this project to the group CHN18IJ002 and create the below specified issues in the forked project.
 
 1. Issue Title: Implement the functionality of the application. Issue Description: Create a signup page with Email, Name and Password
 2. Issue Title: Analysis and Design
