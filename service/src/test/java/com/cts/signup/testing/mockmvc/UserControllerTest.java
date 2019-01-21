@@ -30,8 +30,8 @@ public class UserControllerTest {
 	@Test
 	public void testUserController() throws Exception {
 
-		String EMPLOYEE_REQUEST = "{\"email\" : \"akash@1234gmfdffdfailASDF.com\"" + "," + "\"name\" : \"akash\"" + ","
-				+ "\"password\" : \"akash10234\"}";
+		String EMPLOYEE_REQUEST = "{\"email\" : \"batash@gmail.com\"" + "," + "\"name\" : \"batash\"" + ","
+				+ "\"password\" : \"batsh\"}";
 
 		mockMvc.perform(post("/signup/adduser").content(EMPLOYEE_REQUEST).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().isOk());
