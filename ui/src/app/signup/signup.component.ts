@@ -10,6 +10,10 @@ export class SignupComponent implements OnInit {
 
   users: any;
   json: any;
+  status={
+    signupStatus:false,
+    emailExist:false
+  };
   success=false;
   error=false;
 
@@ -33,34 +37,26 @@ export class SignupComponent implements OnInit {
 
   addUser() {
     this.json = this.signup.value;
-
     console.log(this.json);
-
-    this.service.addUser(this.json).subscribe(data => {
-      console.log(data);
+    this.service.addUser(this.json).subscribe(data => {   
       this.ngOnInit();
+      this.status=data;
+      this.error=false;
+      console.log(this.status);
+      if(this.status.signupStatus==true){
       this.signup.reset();
-      this.success=true;
-      this.error= false;
+      }
     },
     error=>{
 
       this.error=true;
-      this.success=false;
-
+      this.status.signupStatus=false;
+      this.status.emailExist=false;
     }
     
     );
 
   }
   
-/* 
-  deleteUser(id) {
-    this.service.deleteUser(id).subscribe(data => {
-      console.log(data);
-      this.ngOnInit();
-      alert(" User Deleted!");
-    });
-  }
- */
+
 }

@@ -10,24 +10,27 @@ import com.cts.signup.dao.UserDao;
 @Service
 public class UserService {
 
-	/*@Autowired
-	private UserRepository userRepository;
-	*/
+	/*
+	 * @Autowired private UserRepository userRepository;
+	 */
 
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
 	@Transactional
 	public boolean save(User user) {
 		boolean status = false;
-		if(user!=null) {
+
 		userDao.save(user);
 		status = true;
-		}
+
 		return status;
 	}
 
-
-
+	@Transactional
+	public User findUserByEmail(String email) {
+		User user = userDao.getByEmail(email);
+		return user;
+	}
 
 }

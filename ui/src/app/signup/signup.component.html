@@ -36,8 +36,13 @@
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
 
-      <div *ngIf="success" class="alert alert-success">
+      <div *ngIf="status.signupStatus" class="alert alert-success">
         <h4>User added successfully!</h4>
+
+      </div>
+
+      <div *ngIf="status.emailExist" class="alert alert-danger">
+        <h4>Email Already Exists!</h4>
 
       </div>
 
@@ -45,8 +50,8 @@
         <h4>Something went wrong! Retry or contact admin.</h4>
       </div>
 
-
-
+<H2 style="text-align:center">Sign Up</H2>
+<br>
       <form [formGroup]="signup">
 
         <div class="form-group">
