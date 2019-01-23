@@ -1,5 +1,7 @@
 package com.cts.signup.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +15,7 @@ import com.cts.signup.service.UserService;
 @RestController
 @RequestMapping("/signup")
 public class SignupController {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(SignupController.class);
 	private UserService userService;
 
 	@Autowired
@@ -23,24 +25,27 @@ public class SignupController {
 
 	@PostMapping("/adduser")
 	public SignUpStatus saveUser(@RequestBody User user) {
+		LOGGER.info("START: Inside saveUser() method of SignupController");
+		LOGGER.debug("User object by User: {}", user);
 		SignUpStatus status = new SignUpStatus();
 		status.setSignupStatus(false);
 		status.setEmailExist(true);
-
 		User existingUser = userService.findUserByEmail(user.getEmail());
 
 		if (existingUser == null) {
 			status.setSignupStatus(userService.save(user));
 			status.setEmailExist(false);
-
-		} 
-
+		}
+		LOGGER.info("END of saveuser() of SignupController");
 		return status;
 	}
 
 	/*
-	 * @GetMapping("/user/{email}") public User UserbyEmail(@PathVariable String
-	 * email) { return userService.userbyemail(email);
+	 * @GetMapping("/user/{email}") public User findUserByEmail(@PathVariable
+	 * String email) {
+	 * LOGGER.info("START: Inside findUserByEmail() method of SignupController"
+	 * ); LOGGER.debug("Email entered by User: {}" , email); return
+	 * userService.findUserByEmail(email);
 	 * 
 	 * }
 	 */

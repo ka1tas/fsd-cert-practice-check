@@ -20,8 +20,6 @@ public class SignUpStatus {
 		this.emailExist = emailExist;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
