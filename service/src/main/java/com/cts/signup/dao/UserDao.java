@@ -45,7 +45,7 @@ public class UserDao {
 		}
 	}
 
-	public User getByEmail(String email) {
+	public User findByEmail(String email) {
 		User user = null;
 		try {
 			Session session = sessionFactory.openSession();

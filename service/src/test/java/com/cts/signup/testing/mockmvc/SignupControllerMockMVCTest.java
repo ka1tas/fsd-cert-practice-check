@@ -1,11 +1,8 @@
 package com.cts.signup.testing.mockmvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
-import javax.validation.ConstraintViolationException;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,9 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
-
-import com.cts.signup.testing.mockito.SignUpMockitoTester;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,7 +39,7 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void testSuccessfulyaddingUser() throws Exception {
+	public void testSuccessfullSignup() throws Exception {
 		LOGGER.info("START");
 		String USER_DATA = "{\"email\" : \"saikatsin@sinha.mah\"" + "," + "\"name\" : \"Saikat\"" + ","
 				+ "\"password\" : \"saikat12\"}";
@@ -72,15 +66,6 @@ public class SignupControllerMockMVCTest {
 		LOGGER.info("END");
 	}
 
-	@Test
-	public void testUrlisWIncorrect() throws Exception {
-		LOGGER.info("START");
-		String USER_DATA = "{\"email\" : \"saikat1@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
-				+ "\"password\" : \"1234561\"}";
-		mockMvc.perform(post("/signups/addusesr").content(USER_DATA).contentType("application/json;charset=UTF-8"))
-				.andExpect(status().is4xxClientError());
-		LOGGER.info("END");
-	}
 
 	@Test
 	public void testNameisNull() throws Exception {
@@ -132,8 +117,8 @@ public class SignupControllerMockMVCTest {
 	public void testEmailSizeInvalid() throws Exception {
 		LOGGER.info("START");
 		exceptionRule.expect(NestedServletException.class);
-		exceptionRule.expectMessage("Email must be of 3 to 25 characters");
-		String USER_DATA = "{\"email\" : \"saiksinha@singhamahapatra.heyhowareyoudoing\"" + ","
+		exceptionRule.expectMessage("Email must be of 3 to 250 characters");
+		String USER_DATA = "{\"email\" : \"saiksinha03456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789@singhamahapatra.heyhowareyoudoing\"" + ","
 				+ "\"name\" : \"Saikat\"" + "," + "\"password\" : \"saikat12\"}";
 		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is5xxServerError());

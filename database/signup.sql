@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `signup`.`user` ;
 CREATE  TABLE IF NOT EXISTS `signup`.`user` (
   `us_id` INT NOT NULL AUTO_INCREMENT ,
   `us_name` VARCHAR(45) NULL ,
-  `us_email` VARCHAR(45) NULL UNIQUE,
+  `us_email` VARCHAR(250) NULL UNIQUE,
   `us_password` VARCHAR(45) NULL ,
   PRIMARY KEY (`us_id`) ,
   UNIQUE INDEX `us_email_UNIQUE` (`us_email` ASC) )

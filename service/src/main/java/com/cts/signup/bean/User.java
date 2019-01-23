@@ -29,7 +29,7 @@ public class User {
 
 	@NotNull(message = "Email cannot be empty")
 	@Pattern(regexp = ".+@.+\\..+", message = "Email address is invalid")
-	@Size(min = 1,max=25, message = "Email must be of 3 to 25 characters")
+	@Size(min = 1,max=250, message = "Email must be of 3 to 250 characters")
 	@Column(name = "us_email")
 	private String email;
 

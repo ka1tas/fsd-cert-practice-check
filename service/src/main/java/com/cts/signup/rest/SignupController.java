@@ -27,17 +27,8 @@ public class SignupController {
 	public SignUpStatus saveUser(@RequestBody User user) {
 		LOGGER.info("START: Inside saveUser() method of SignupController");
 		LOGGER.debug("User object by User: {}", user);
-		SignUpStatus status = new SignUpStatus();
-		status.setSignupStatus(false);
-		status.setEmailExist(true);
-		User existingUser = userService.findUserByEmail(user.getEmail());
-
-		if (existingUser == null) {
-			status.setSignupStatus(userService.save(user));
-			status.setEmailExist(false);
-		}
 		LOGGER.info("END of saveuser() of SignupController");
-		return status;
+		return userService.save(user);
 	}
 
 	/*

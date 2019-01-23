@@ -15,18 +15,18 @@ import org.slf4j.LoggerFactory;
 
 import com.cts.signup.bean.SignUpStatus;
 import com.cts.signup.bean.User;
-import com.cts.signup.rest.SignupController;
+import com.cts.signup.dao.UserDao;
 import com.cts.signup.service.UserService;
 
-public class SignUpMockitoTester {
+public class userServiceMockitoTester {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(SignUpMockitoTester.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(userServiceMockitoTester.class);
 	
 	@Mock
-	private UserService service;
+	private UserDao userDao;
 
 	@InjectMocks
-	private SignupController controller;
+	private UserService service;
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,18 +37,17 @@ public class SignUpMockitoTester {
 	public void testSuccesfullSignup() {
 		LOGGER.info("START of testSuccesfullSignup() testing in SignUpMockitoTester");
 		User testUser = new User(1, "Saikat", "saikat@gmail.com", "12345");
-		when(service.save(testUser)).thenReturn(true);
-		when(service.findUserByEmail(testUser.getEmail())).thenReturn(null);
+		when(userDao.save(testUser)).thenReturn(true);
+		when(userDao.findByEmail(testUser.getEmail())).thenReturn(null);
 
 		SignUpStatus expectedstatus = new SignUpStatus();
 		expectedstatus.setEmailExist(false);
 		expectedstatus.setSignupStatus(true);
 
-		SignUpStatus status = controller.saveUser(testUser);
-		System.out.println(status);
-		System.out.println(expectedstatus);
+		SignUpStatus status = service.save(testUser);
+		LOGGER.debug("status: "+ status);
 		assertEquals(true, expectedstatus.equals(status));
-		verify(service, times(1)).save(testUser);
+		verify(userDao, times(1)).save(testUser);
 		LOGGER.info("END of testSuccesfullSignup() testing in SignUpMockitoTester");
 	}
 
@@ -56,17 +55,17 @@ public class SignUpMockitoTester {
 	public void testSignupIfDuplicateEmail() {
 		LOGGER.info("START of testSignupIfDuplicateEmail() testing in SignUpMockitoTester");
 		User testUser = new User(1, "Saikat", "saikat@gmail.com", "12345");
-		when(service.save(testUser)).thenReturn(true);
-		when(service.findUserByEmail(testUser.getEmail())).thenReturn(testUser);
+		when(userDao.save(testUser)).thenReturn(true);
+		when(userDao.findByEmail(testUser.getEmail())).thenReturn(testUser);
 
 		SignUpStatus expectedstatus = new SignUpStatus();
 		expectedstatus.setEmailExist(true);
 		expectedstatus.setSignupStatus(false);
 
-		SignUpStatus status = controller.saveUser(testUser);
-		System.out.println(status);
+		SignUpStatus status = service.save(testUser);
+		LOGGER.debug("status: "+ status);
 		assertEquals(true, expectedstatus.equals(status));
-		verify(service, times(1)).findUserByEmail(testUser.getEmail());
+		verify(userDao, times(1)).findByEmail(testUser.getEmail());
 		LOGGER.info("END of testSignupIfDuplicateEmail() testing in SignUpMockitoTester");
 	}
 
