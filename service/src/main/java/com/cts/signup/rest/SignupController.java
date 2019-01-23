@@ -14,7 +14,7 @@ import com.cts.signup.service.UserService;
 
 @RestController
 @RequestMapping("/signup")
-public class SignupController {
+public class SignupController extends ExceptionController{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SignupController.class);
 	private UserService userService;
 
@@ -30,15 +30,5 @@ public class SignupController {
 		LOGGER.info("END of saveuser() of SignupController");
 		return userService.save(user);
 	}
-
-	/*
-	 * @GetMapping("/user/{email}") public User findUserByEmail(@PathVariable
-	 * String email) {
-	 * LOGGER.info("START: Inside findUserByEmail() method of SignupController"
-	 * ); LOGGER.debug("Email entered by User: {}" , email); return
-	 * userService.findUserByEmail(email);
-	 * 
-	 * }
-	 */
 
 }
