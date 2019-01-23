@@ -32,9 +32,9 @@ public class UserDao {
 			LOGGER.info("Start of save() method in UserDao");
 			LOGGER.debug("{user}", user);
 			Session session = sessionFactory.openSession();
-			session.beginTransaction();
+			//Transaction transaction = session.beginTransaction();
 			session.save(user);
-			session.getTransaction().commit();
+			//transaction.commit();
 			session.close();
 			LOGGER.info("End of save() method in userDao");
 			return true;
@@ -49,14 +49,15 @@ public class UserDao {
 		User user = null;
 		try {
 			Session session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
+			//Transaction transaction = session.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<User> users = (List<User>) session.createQuery("from User u where u.email = :email")
 					.setParameter("email", email).list();
 			if (users.size() > 0) {
 				user = users.get(0);
 			}
-			transaction.commit();
+			//transaction.commit();
+			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
