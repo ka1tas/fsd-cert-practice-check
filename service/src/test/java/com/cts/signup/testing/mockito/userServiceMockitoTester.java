@@ -46,8 +46,8 @@ public class userServiceMockitoTester {
 
 		SignUpStatus status = service.save(testUser);
 		LOGGER.debug("status: "+ status);
-		assertEquals(true, expectedstatus.equals(status));
 		verify(userDao, times(1)).save(testUser);
+		assertEquals(true, expectedstatus.equals(status));
 		LOGGER.info("END of testSuccesfullSignup() testing in SignUpMockitoTester");
 	}
 
@@ -64,8 +64,8 @@ public class userServiceMockitoTester {
 
 		SignUpStatus status = service.save(testUser);
 		LOGGER.debug("status: "+ status);
-		assertEquals(true, expectedstatus.equals(status));
 		verify(userDao, times(1)).findByEmail(testUser.getEmail());
+		assertEquals(true, expectedstatus.equals(status));
 		LOGGER.info("END of testSignupIfDuplicateEmail() testing in SignUpMockitoTester");
 	}
 
