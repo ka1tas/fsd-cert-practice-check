@@ -22,19 +22,19 @@ public class User {
 	@Column(name = "us_id")
 	private int id;
 
-	@NotNull(message = "User Name cannot be empty")
-	@Size(min = 1, message = "Name can not be Empty")
+	@NotNull(message = "Name cannot be empty")
+	@Size(min = 1,max=20, message = "Name must be of 1 to 20 characters")
 	@Column(name = "us_name")
 	private String name;
 
 	@NotNull(message = "Email cannot be empty")
-	// @Pattern(regexp = ".+@.+\\..+", message = "Email address is invalid")
-	@Size(min = 1, message = "Email can not be Empty")
+	@Pattern(regexp = ".+@.+\\..+", message = "Email address is invalid")
+	@Size(min = 1,max=25, message = "Email must be of 3 to 25 characters")
 	@Column(name = "us_email")
 	private String email;
 
 	@NotNull(message = "Password cannot be empty")
-	@Size(min = 3, max = 10, message = "Password must be 3 to 10 characters")
+	@Size(min =3,max=25, message = "Passsword must be of 3 to 25 characters")
 	@Column(name = "us_password")
 	private String password;
 

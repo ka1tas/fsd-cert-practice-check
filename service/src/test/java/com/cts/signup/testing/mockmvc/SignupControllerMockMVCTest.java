@@ -45,7 +45,7 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void testforSuccessfullyaddingUser() throws Exception {
+	public void testSuccessfulyaddingUser() throws Exception {
 		LOGGER.info("START");
 		String USER_DATA = "{\"email\" : \"saikatsin@sinha.mah\"" + "," + "\"name\" : \"Saikat\"" + ","
 				+ "\"password\" : \"saikat12\"}";
@@ -61,7 +61,7 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void checkEmailExists() throws Exception {
+	public void testEmailAlreadyExists() throws Exception {
 		LOGGER.info("START");
 		String USER_DATA = "{\"email\" : \"ram@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
 				+ "\"password\" : \"saikats\"}";
@@ -73,21 +73,7 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void incorrectPasswordFormat() throws Exception {
-		LOGGER.info("START");
-
-		exceptionRule.expect(NestedServletException.class);
-
-		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
-				+ "\"password\" : \"1\"}";
-		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
-				.andExpect(status().is5xxServerError());
-
-		LOGGER.info("END");
-	}
-
-	@Test
-	public void wrongUrl() throws Exception {
+	public void testUrlisWIncorrect() throws Exception {
 		LOGGER.info("START");
 		String USER_DATA = "{\"email\" : \"saikat1@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
 				+ "\"password\" : \"1234561\"}";
@@ -97,11 +83,11 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void nameisNull() throws Exception {
+	public void testNameisNull() throws Exception {
 		LOGGER.info("START");
 		exceptionRule.expect(NestedServletException.class);
-
-		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," + "\"name\" : \"\"" + ","
+		exceptionRule.expectMessage("Name cannot be empty");
+		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," 
 				+ "\"password\" : \"1234561\"}";
 		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is5xxServerError());
@@ -109,34 +95,75 @@ public class SignupControllerMockMVCTest {
 	}
 
 	@Test
-	public void emailisNull() throws Exception {
+	public void testEmailisNull() throws Exception {
 		LOGGER.info("START");
 		exceptionRule.expect(NestedServletException.class);
-
-		String USER_DATA = "{\"email\" : \"\"" + "," + "\"name\" : \"saikat\"" + "," + "\"password\" : \"1234561\"}";
+		exceptionRule.expectMessage("Email cannot be empty");
+		String USER_DATA = "{\"name\" : \"saikat\"" + "," + "\"password\" : \"1234561\"}";
 		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is5xxServerError());
+	}
+	
+	@Test
+	public void testPasswordisNull() throws Exception {
+		LOGGER.info("START");
+		exceptionRule.expect(NestedServletException.class);
+		exceptionRule.expectMessage("Password cannot be empty");
+		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," + "\"name\" : \"saikat\""
+				+ "}";
+		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is5xxServerError());
+		LOGGER.info("START");
 	}
 
 	@Test
-	public void passwordisNull() throws Exception {
+	public void testIncorrectNameSize() throws Exception {
 		LOGGER.info("START");
-		exceptionRule.expect(NestedServletException.class);
-		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
-				+ "\"password\" : \"\"}";
+		 exceptionRule.expect(NestedServletException.class);
+		 exceptionRule.expectMessage("Name must be of 1 to 20 characters");
+		String USER_DATA = "{\"email\" : \"saikatsin@sinha.mah\"" + ","
+				+ "\"name\" : \"atsinghamahapatrahellohowareyou\"" + "," + "\"password\" : \"saikat12\"}";
 		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
 				.andExpect(status().is5xxServerError());
-		LOGGER.info("START");
+		LOGGER.info("END");
 	}
 
-	/*
-	 * @Test public void testExistenceofEmail () throws Exception {
-	 * mockMvc.perform( get("/signup/user/ram@gmail.com").contentType(
-	 * "application/json;charset=UTF-8")).andExpect(status().isOk())
-	 * .andExpect(jsonPath("$.email").value("ram@gmail.com"));
-	 * 
-	 * 
-	 * }
-	 */
+	@Test
+	public void testEmailSizeInvalid() throws Exception {
+		LOGGER.info("START");
+		exceptionRule.expect(NestedServletException.class);
+		exceptionRule.expectMessage("Email must be of 3 to 25 characters");
+		String USER_DATA = "{\"email\" : \"saiksinha@singhamahapatra.heyhowareyoudoing\"" + ","
+				+ "\"name\" : \"Saikat\"" + "," + "\"password\" : \"saikat12\"}";
+		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is5xxServerError());
+		LOGGER.info("END");
+	}
+
+	@Test
+	public void testIncorrectPasswordSize() throws Exception {
+		LOGGER.info("START");
+
+		exceptionRule.expect(NestedServletException.class);
+		exceptionRule.expectMessage("Passsword must be of 3 to 25 characters");
+		String USER_DATA = "{\"email\" : \"saikat@gmail.com\"" + "," + "\"name\" : \"saikat\"" + ","
+				+ "\"password\" : \"1\"}";
+		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is5xxServerError());
+
+		LOGGER.info("END");
+	}
+
+	@Test
+	public void testIncorrectEmailPattern() throws Exception {
+		LOGGER.info("START");
+		exceptionRule.expect(NestedServletException.class);
+		exceptionRule.expectMessage("Email address is invalid");
+		String USER_DATA = "{\"email\" : \"saiksinha.mah\"" + "," + "\"name\" : \"Saikat\"" + ","
+				+ "\"password\" : \"saikat12\"}";
+		mockMvc.perform(post("/signup/adduser").content(USER_DATA).contentType("application/json;charset=UTF-8"))
+				.andExpect(status().is5xxServerError());
+		LOGGER.info("END");
+	}
 
 }
