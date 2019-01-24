@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VertokenComponent } from './vertoken/vertoken.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
+    VertokenComponent,
    
   ],
   imports: [

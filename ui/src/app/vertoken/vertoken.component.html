@@ -1,0 +1,56 @@
+
+
+ <nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Verify Token</span>
+</nav>
+
+<br><br>
+
+<div class="container-fluid">
+
+
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+<!-- 
+      <div *ngIf="status.signupStatus" class="alert alert-success">
+        <h4>User added successfully!</h4>
+
+      </div>
+
+      <div *ngIf="status.emailExist" class="alert alert-danger">
+        <h4>Email Already Exists!</h4>
+
+      </div> -->
+
+      <div *ngIf="error" class="alert alert-danger">
+        <h4>Something went wrong! Retry or contact admin.</h4>
+      </div>
+
+<H2 style="text-align:center">Please Authenticate</H2>
+<br>
+      <form [formGroup]="verifytoken">
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Your Name" formControlName="name">
+          <small>*Enter your name</small>
+        </div>
+
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Enter an ID" formControlName="id">
+          <small>*Enter an ID</small>
+        </div>
+
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Role" formControlName="role">
+          <small>* Choose a Role</small>
+        </div>
+
+
+        <input type="button" class="btn btn-success col-lg-12 col-sm-12 col-12" value="Authenticate" (click)="authenticate();">
+
+      </form>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>
