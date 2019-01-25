@@ -5,7 +5,7 @@ import { VertokenComponent } from './vertoken/vertoken.component';
 
 const routes: Routes = [
 
-  { path:"" , component:VertokenComponent },
+  { path:"" , component:SignupComponent },
   { path:"signup" , component:SignupComponent },
   { path:"verifytoken" , component:VertokenComponent }
 ];

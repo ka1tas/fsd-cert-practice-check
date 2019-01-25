@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SignupService } from '../signup.service';
+import { TransfereService } from '../transfere.service';
+import { TokenService } from '../token.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,6 +12,8 @@ export class SignupComponent implements OnInit {
 
   users: any;
   json: any;
+  token:any;
+  tokenjson:any;
   status={
     signupStatus:false,
     emailExist:false
@@ -24,13 +28,27 @@ export class SignupComponent implements OnInit {
   });
 
 
-  constructor(public service: SignupService) { }
-  ngOnInit() {
+  constructor(public service: SignupService, public tokeService: TokenService, public transfereService: TransfereService) { }
+  ngOnInit(
+   
+  ) {
 
-    /*   this.service.getAllUsers().subscribe(data=>{
-        console.log(data);
-        this.users=data;
-      }); */
+    this.tokenjson=  {
+      "userName":"saikat",
+      "id":"5465465",
+      "role":"adminan"
+      };
+
+      this.tokeService.getToken(this.tokenjson).subscribe(data=>{
+        console.log(data);},
+        error=>{
+        this.token=error.error.text;
+        console.log("Token: "+this.token)
+      }); 
+
+     /*  this.token=  this.transfereService.getToken();
+      console.log(this.token);*/
+
   }
 
 

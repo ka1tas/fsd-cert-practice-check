@@ -1,0 +1,31 @@
+package com.cts.tshell.rest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cts.tshell.bean.Option;
+import com.cts.tshell.service.QuestionService;
+
+@RestController
+@RequestMapping("/question")
+public class QuestionController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(QuestionController.class);
+
+	@Autowired
+	private QuestionService questionService;
+
+	@PostMapping("/option/delete")
+	public void deleteOptionById(@RequestBody int id) {
+		LOGGER.info("start of deleteOptionById controller");
+		Option option = questionService.getOptionById(id);
+		questionService.deleteOption(option);
+		LOGGER.info("end of deleteOptionById controller");
+
+	}
+
+}

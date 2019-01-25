@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SignupService } from '../signup.service';
+import { TokenService } from '../token.service';
+import { TransfereService } from '../transfere.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vertoken',
@@ -13,7 +16,7 @@ export class VertokenComponent implements OnInit {
     json:any;
     jwtToken:any;
 
-  constructor(public service: SignupService) { }
+  constructor(public service: TokenService, private router: Router, public transfereService: TransfereService) { }
 
   verifytoken = new FormGroup({
     name: new FormControl(''),
@@ -30,7 +33,7 @@ export class VertokenComponent implements OnInit {
     console.log(this.json);
     console.log("inside authenticate");
     this.service.getToken(this.json).subscribe(data => {   
-      this.jwtToken=data;
+   
       console.log("saikat");
     },
     error=>{
@@ -40,17 +43,14 @@ export class VertokenComponent implements OnInit {
       console.log(error);
     }
     else{
-      this.jwtToken=error.error.text;
-      
-      console.log(error.error.text);
-      
+      this.jwtToken=error.error.text;    
+      console.log("statsus"+ error); 
+      console.log(error.error.text);    
+      this.transfereService.setToken(this.jwtToken); 
+      this.router.navigate(['/signup']);
     }
     }
-    
     );
-
   }
   
-
-
 }

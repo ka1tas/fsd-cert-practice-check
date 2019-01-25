@@ -1,0 +1,39 @@
+package com.cts.tshell.service;
+
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cts.tshell.bean.Option;
+import com.cts.tshell.repository.OptionRepository;
+import com.cts.tshell.repository.QuestionRepository;
+
+@Service
+public class QuestionService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(QuestionService.class);
+
+	@Autowired
+	private QuestionRepository questionRepository;
+	@Autowired
+	private OptionRepository optionRepository;
+
+	@Transactional
+	public void deleteOption(Option option) {
+		LOGGER.info("start of delete Option");
+		optionRepository.delete(option);
+		LOGGER.debug(" (delete)Option By Id details are{}", option);
+		LOGGER.info("end of delete Option");
+	}
+
+	@Transactional
+	public Option getOptionById(int id) {
+		Option option = optionRepository.fetchOptionDetailsById(id);
+		LOGGER.debug(" Inside service......Option By Id details are{}", option);
+		return option;
+	}
+
+}

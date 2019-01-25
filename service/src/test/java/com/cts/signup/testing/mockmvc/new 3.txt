@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import { SearchExistingQuestionsService } from '../search-existing-questions.service';
+import { FormBuilder } from '@angular/forms';
+//import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'app-search-existing-questions',
+  templateUrl: './search-existing-questions.component.html',
+  styleUrls: ['./search-existing-questions.component.css']
+})
+export class SearchExistingQuestionsComponent implements OnInit {
+
+  constructor(private service:SearchExistingQuestionsService, private fb:FormBuilder) { }
+  
+  ngOnInit() {
+    
+  }
+  deletestatus=false;
+  questions:string="Which of the following are legal lines of Java code?, Which data type value is returned by all transcendental math functions?Which of these literals can be contained in float data type variable? What is the range of short data type in Java?";
+  option1:string="int w = (int)888.8; byte x = (byte)100L;long y = (byte)100;byte z = (byte)100L;";
+  count=0;
+  questionList:any;
+  searchQuery:string;
+  questionForm = this.fb.group({
+    id:['3546'],
+    question:['Which of the following are legal lines of Java code?, Which data type value is returned by all transcendental math functions?Which of these literals can be contained in float data type variable? What is the range of short data type in Java?'],
+    options:this.fb.array([
+      this.fb.control('')
+    ]),
+    solution:[],
+    opttionList:this.fb.group({}),
+    user:this.fb.group({
+      id:['']
+    })
+  })
+
+  searchQ () {
+    console.log('This is searchQ()')
+    this.service.fetchQuestions(this.searchQuery).subscribe(
+      data => {
+        this.questionList = data;
+      }
+    )
+  }
+
+  deleteoption(id:number){
+    
+    console.log('inside delete option')
+    //console.log(optionId)
+    this.service.deleteoption(id).subscribe(
+      data => {
+        console.log(data);
+      })
+     this.deletestatus=true;
+  }
+ 
+}
